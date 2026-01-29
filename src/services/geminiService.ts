@@ -2,8 +2,13 @@
 import { GoogleGenAI, Modality, Type } from "@google/genai";
 import { SignStep, SignOfTheDay } from "../types";
 
-// The API key is handled automatically by the environment
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+const API_KEY = import.meta.env.VITE_API_KEY;
+
+if (!API_KEY) {
+  throw new Error("VITE_API_KEY is missing");
+}
+
+const ai = new GoogleGenAI({ apiKey: API_KEY });
 
 /**
  * Translates a camera frame showing ISL to English and Hindi text.
@@ -59,7 +64,7 @@ export async function generateSpeech(text: string): Promise<string | undefined> 
       },
     },
   });
-  
+
   return response.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data;
 }
 
@@ -106,15 +111,16 @@ export async function generateSignImage(gloss: string, description: string): Pro
     model: 'gemini-2.5-flash-image',
     contents: {
       parts: [
-        { text: `A high-quality 3D digital human avatar performing the Indian Sign Language (ISL) sign for '${gloss}'. 
+        {
+          text: `A high-quality 3D digital human avatar performing the Indian Sign Language (ISL) sign for '${gloss}'. 
         Action: ${description}. 
         Style: Clean, professional, instructional, white background, chest-up view, clear hand positioning, soft studio lighting.` }
       ]
     },
     config: {
-        imageConfig: {
-            aspectRatio: "1:1"
-        }
+      imageConfig: {
+        aspectRatio: "1:1"
+      }
     }
   });
 

@@ -7,10 +7,7 @@ export default defineConfig({
   plugins: [react()],
   // Use relative base path for GitHub Pages compatibility
   base: './',
-  define: {
-    // This allows the build process to replace process.env.API_KEY with the actual key
-    'process.env.API_KEY': JSON.stringify(process.env.API_KEY)
-  },
+  // define header removed as we use VITE_ prefix now
   server: {
     port: 3000
   },
