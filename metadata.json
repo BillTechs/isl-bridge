@@ -1,0 +1,8 @@
+{
+  "name": "ISL Bridge: Sign Language Translator",
+  "description": "A bidirectional translator between Indian Sign Language (ISL) and English, featuring camera-to-text translation and avatar-based sign visualization.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
